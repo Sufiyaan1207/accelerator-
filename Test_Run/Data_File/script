@@ -1,0 +1,67 @@
+    /*
+    //Fetching data from Xcel File
+    String excelFilePath="C:\\Users\\shahr\\Eclipse-WorkSpace1\\Test_Run\\Data_File\\MMT.xlsx";
+	FileInputStream inputstream = new FileInputStream(excelFilePath);
+	XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
+	XSSFSheet sheet = workbook.getSheet("Sheet1");
+
+//using for loop
+	int rows=sheet.getLastRowNum();
+	int cols = sheet.getRow(1).getLastCellNum();
+
+	for(int r=0;r<=rows;r++)
+	{
+		XSSFRow row = sheet.getRow(r);
+		
+		for(int c=0;c<cols;c++)
+		{
+			XSSFCell cell = row.getCell(c);
+			
+			switch(cell.getCellType())
+			{
+			case STRING: System.out.println(cell.getStringCellValue());break;
+			case NUMERIC: System.out.println(cell.getNumericCellValue());break;
+			case BOOLEAN: System.out.println(cell.getBooleanCellValue());break;
+			}
+		}
+		System.out.println();
+	} 
+    */ 
+ 
+ 
+ WebElement from = driver.findElement(By.xpath("//div/div/div[2]/div[1]/div[1]/div[1]/div/div/div/input"));
+    from.click();
+    from.sendKeys("patna");
+    Thread.sleep(2000);
+    from.sendKeys(Keys.ARROW_DOWN, Keys.ENTER);   
+    
+    //input Destination of Trip
+    driver.findElement(By.xpath("//div/div/div/div/div[2]/label")).click();
+    WebElement To= driver.findElement(By.xpath("//div/div/div/div/div/div/div/input"));
+    To.click();
+    To.sendKeys("mumbai");
+    Thread.sleep(2000);
+    To.sendKeys(Keys.ARROW_DOWN , Keys.ENTER);
+    
+    
+    //Date Selection
+    WebElement Date = driver.findElement(By.xpath("//div[1]/div[3]/div[4]/div[1]"));
+    Date.click();
+    WebElement Return = driver.findElement(By.xpath("//div[1]/div[3]/div[5]/div[1]/div"));
+    Return.click();
+    
+    
+   Thread.sleep(2000);
+   
+   driver.findElement(By.xpath("//div/div/div/label[span='Travellers & CLASS']")).click();
+    
+    
+    
+    /*  List<WebElement> p = driver.
+    	      findElements(By.xpath("//div[2]/div/ul[1][@class='guestCounter font12 darkText gbCounter']"));
+    	      System.out.println("Menu Items are: ");
+    	      //iterate through list
+    	      for( WebElement i: p){
+    	         System.out.println(i.getText());
+  */  	    
+    

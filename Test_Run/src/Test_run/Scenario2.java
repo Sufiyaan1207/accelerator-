@@ -1,0 +1,93 @@
+//Scenario 2 + 3 of MMT
+
+package Test_run;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+public class Scenario2 {
+
+	public static void main(String[] args ) throws InterruptedException, IOException {
+	System.setProperty("webdriver.chrome.driver","C:\\Users\\shahr\\Downloads\\chromedriver_win32\\chromedriver.exe");
+    WebDriver driver = new ChromeDriver();
+    driver.manage().window().maximize();
+    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    
+    
+    	//Open WebPage
+    driver.get("https://www.makemytrip.com/");
+    	//Click popup alert
+    
+    
+    FileInputStream fis = new FileInputStream("C:\\Users\\shahr\\Eclipse-WorkSpace1\\Test_Run\\Data_File\\MMT.xlsx");
+    XSSFWorkbook workbook = new XSSFWorkbook(fis);
+    XSSFSheet sheet = workbook.getSheet("Sheet1");
+    int rowcount = sheet.getLastRowNum();
+    int colcount = sheet.getRow(1).getLastCellNum();
+    System.out.println("rowcount" +rowcount+"colcount"+colcount);
+    for(int i=1;i<=rowcount;i++)
+    {
+    	XSSFRow celldata = sheet.getRow(i);
+    	
+    	String From = celldata.getCell(0).getStringCellValue();
+    	String To = celldata.getCell(1).getStringCellValue();
+
+    
+    driver.findElement(By.xpath("//div/div[1]/div/div/ul/li[4]")).click();
+    
+    
+    	//Selects Type of Trip
+    WebElement RoundTrip = driver.findElement(By.xpath("//div/ul/li[text()='Round Trip']"));			
+    	//RoundTrip is selected		
+    RoundTrip.click();			
+    System.out.println("Round_Trip_Selected");					
+    	        
+    	//Input Origin of Trip
+    driver.findElement(By.xpath("//div/div/div/div/label/span[text()='From']")).click();
+    driver.findElement(By.xpath("//div/div/div[2]/div[1]/div[1]/div[1]/div/div/div/input")).sendKeys(From);
+    
+ 
+    	//input Destination of Trip
+    driver.findElement(By.xpath("//div/div/div/div/div[2]/label")).click();
+    driver.findElement(By.xpath("//div/div/div/div/div/div/div/input")).sendKeys(To);
+    
+    
+    
+    	//Date Selection
+    WebElement Date = driver.findElement(By.xpath("//div[1]/div[3]/div[4]/div[1]"));
+    Date.click();
+    WebElement Return = driver.findElement(By.xpath("//div[1]/div[3]/div[5]/div[1]/div"));
+    Return.click();
+        
+    Thread.sleep(2000);
+   
+    	//Count Of Passenger
+    driver.findElement(By.xpath("//div/div/div/label[span='Travellers & CLASS']")).click();
+    driver.findElements(By.xpath("//div[2]/div/ul[1][@class='guestCounter font12 darkText gbCounter']"));   
+    WebElement count = driver.findElement(By.xpath("//div[5]/div/div[1]/ul/li[4]"));
+    count.click();
+    System.out.println(count.getText());
+    driver.findElement(By.xpath("//div/div/div/button[text()='APPLY']")).click();
+    
+    driver.findElement(By.xpath("//*[text()='Search']")).click();
+   
+    
+    driver.close();
+    
+	}
+}
+}
