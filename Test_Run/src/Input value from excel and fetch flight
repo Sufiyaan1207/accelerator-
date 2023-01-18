@@ -1,4 +1,4 @@
-//Scenario 2 + 3 of MMT
+//Inputing value from excelsheet and fetching the flight detail
 
 package Test_run;
 
@@ -27,11 +27,9 @@ public class Scenario2 {
     driver.manage().window().maximize();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     
-    
-    	//Open WebPage
+      	//Open WebPage
     driver.get("https://www.makemytrip.com/");
     	//Click popup alert
-    
     
     FileInputStream fis = new FileInputStream("C:\\Users\\shahr\\Eclipse-WorkSpace1\\Test_Run\\Data_File\\MMT.xlsx");
     XSSFWorkbook workbook = new XSSFWorkbook(fis);
@@ -65,17 +63,13 @@ public class Scenario2 {
     driver.findElement(By.xpath("//div/div/div/div/div[2]/label")).click();
     driver.findElement(By.xpath("//div/div/div/div/div/div/div/input")).sendKeys(To);
     
-    
-    
     	//Date Selection
     WebElement Date = driver.findElement(By.xpath("//div[1]/div[3]/div[4]/div[1]"));
     Date.click();
     WebElement Return = driver.findElement(By.xpath("//div[1]/div[3]/div[5]/div[1]/div"));
     Return.click();
         
-    Thread.sleep(2000);
-   
-    	//Count Of Passenger
+       	//Count Of Passenger
     driver.findElement(By.xpath("//div/div/div/label[span='Travellers & CLASS']")).click();
     driver.findElements(By.xpath("//div[2]/div/ul[1][@class='guestCounter font12 darkText gbCounter']"));   
     WebElement count = driver.findElement(By.xpath("//div[5]/div/div[1]/ul/li[4]"));
@@ -84,8 +78,7 @@ public class Scenario2 {
     driver.findElement(By.xpath("//div/div/div/button[text()='APPLY']")).click();
     
     driver.findElement(By.xpath("//*[text()='Search']")).click();
-   
-    
+       
     driver.close();
     
 	}
