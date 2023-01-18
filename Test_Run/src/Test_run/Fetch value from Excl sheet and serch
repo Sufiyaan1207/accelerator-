@@ -1,0 +1,51 @@
+//Fetch value from Excl sheet and serch
+
+
+package Test_run;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Scenario8 {
+
+	
+	public static void main(String[] args ) throws IOException {
+		
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\shahr\\Downloads\\chromedriver_win32\\chromedriver.exe");
+	    WebDriver driver = new ChromeDriver();
+	    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	    driver.get("https://www.wikipedia.org/");
+	    
+	    
+	    FileInputStream fis = new FileInputStream("C:\\Users\\shahr\\Eclipse-WorkSpace1\\Test_Run\\Data_File\\Wiki.xlsx");
+	    XSSFWorkbook workbook = new XSSFWorkbook(fis);
+	    XSSFSheet sheet = workbook.getSheet("Sheet1");
+	    int rowcount = sheet.getLastRowNum();
+	    int colcount = sheet.getRow(1).getLastCellNum();
+	   // System.out.println("rowcount" +rowcount+"colcount"+colcount);
+	    for(int i=1;i<=rowcount;i++)
+	    {
+	    	XSSFRow celldata = sheet.getRow(i);
+	    	
+	    	String search = celldata.getCell(0).getStringCellValue();
+		    
+	    
+	    	driver.findElement(By.cssSelector("#searchInput")).sendKeys(search);
+	    	
+	    	driver.findElement(By.xpath("//form/fieldset/button[i='Search']")).click();
+	    	
+	    	System.out.println(i+"."+search);
+	
+  driver.close();
+		    
+	}
+}
+}
