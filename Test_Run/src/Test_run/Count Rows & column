@@ -1,0 +1,63 @@
+//Total number of Rows & Column in Acquisitions table 
+
+
+package Test_run;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Scenario9 {
+
+	public static void main(String[] args ) throws IOException {
+	
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\shahr\\Downloads\\chromedriver_win32\\chromedriver.exe");
+	    WebDriver driver = new ChromeDriver();
+	    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	    driver.get("https://www.wikipedia.org/");
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+	    	   
+	    //Fetch input from XcelSheet
+	    FileInputStream fis = new FileInputStream("C:\\Users\\shahr\\Eclipse-WorkSpace1\\Test_Run\\Data_File\\Wiki.xlsx");
+	    XSSFWorkbook workbook = new XSSFWorkbook(fis);
+	    XSSFSheet sheet = workbook.getSheet("Sheet1");
+	    int rowcount = sheet.getLastRowNum();
+	    int colcount = sheet.getRow(1).getLastCellNum();
+	      for(int i=1;i<=rowcount;i++)
+	    {
+	    	XSSFRow celldata = sheet.getRow(i);
+	       	String search = celldata.getCell(0).getStringCellValue();
+	    
+	       		//inputs the detail
+	    	driver.findElement(By.cssSelector("#searchInput")).sendKeys(search);
+	    		//clcks on Search button
+	    	driver.findElement(By.xpath("//form/fieldset/button[i='Search']")).click();
+	    	//search result printed on console
+	    	System.out.println(i+"."+search);
+	    	
+	    		//Scrolled down to table heading
+	    	WebElement word = driver.findElement(By.id("Acquisitions"));
+	        // Scroll down till the element is found		
+	        js.executeScript("arguments[0].scrollIntoView();", word);
+
+	        	//count of rows
+	        List<WebElement> countrow = driver.findElements(By.xpath("//div[1]/table[2]/tbody/tr"));
+	        System.out.println("Total Rows: " +countrow.size());
+	     
+	        	//count of column
+	        List<WebElement> countcol = driver.findElements(By.xpath("//div[1]/table[2]/tbody/tr[2]/td"));
+	        System.out.println("Total Column: " +countcol.size());
+	      	                
+	   	}
+}
+}
